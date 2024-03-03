@@ -1,38 +1,33 @@
+from utils import input_error, parse_input
+
 contacts = {}
 
 
-def parse_input(user_input):
-    parts = user_input.strip().split(maxsplit=2)
-    command = parts[0].lower()
-    args = parts[1:] if len(parts) > 1 else []
-    return command, args
-
-
+@input_error
 def add_contact(args):
-    if len(args) < 2:
-        return "Please provide both name and phone number."
     name, phone = args
     contacts[name] = phone
     return "Contact added."
 
 
+@input_error
 def change_contact(args):
-    if len(args) < 2:
-        return "Please provide both name and new phone number."
     name, phone = args
-    if name in contacts:
-        contacts[name] = phone
-        return "Contact updated."
-    else:
-        return "Contact not found."
+
+    if name not in contacts:
+        raise KeyError
+
+    contacts[name] = phone
+    return "Contact updated."
 
 
+@input_error
 def show_phone(args):
-    if not args:
-        return "Please provide a name."
     name = args[0]
     phone = contacts.get(name)
-    return phone if phone else "Contact not found."
+    if not phone:
+        raise KeyError
+    return phone
 
 
 def show_all():
