@@ -1,4 +1,4 @@
 from bot import main as run_bot
-from assistent import main as run_assistent
+from address_book import AddressBook
 
-__all__ = [run_bot, run_assistent]
+__all__ = [run_bot, AddressBook]
